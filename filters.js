@@ -82,7 +82,7 @@ function sharpFilter(image, percent) {
     var x, y, pixel;
     var filter = [
         [1,1,1],
-        [1,-8,1],
+        [1,1,1],
         [1,1,1]
     ];
     var filterSize = filter.length;
@@ -103,9 +103,9 @@ function sharpFilter(image, percent) {
                 }
                 }
                 image.setPixel(x, y, {
-                    r: counterR + image.r,
-                    g: counterG + image.g,
-                    b: counterB + image.b
+                    r: 3*(pixel.r - parseInt((1.0/9.0)*counterR)) + pixel.r,
+                    g: 3*(pixel.g - parseInt((1.0/9.0)*counterG)) + pixel.g,
+                    b: 3*(pixel.b - parseInt((1.0/9.0)*counterB)) + pixel.b
                 });
                 counterR = 0;
                 counterG = 0;
