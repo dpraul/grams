@@ -17,4 +17,4 @@ Filters are stored in `filters.js`. To add a new filter:
             filter: filterFunction
         }
     ```
-3. That's it. When you push changes, they will be available at `http://grams.dylanpraul.com`
+3. That's it. When you push changes, they will be available at http://grams.dylanpraul.com
