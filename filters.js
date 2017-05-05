@@ -54,7 +54,7 @@ function sharpFilter(image, percent) {
     var counterG = 0;
     var counterB = 0;
 
-    for (var l = 0; l < parseInt(100*percent); l++){
+    //for (var l = 0; l < parseInt(100*percent); l++){
         for (x = filterLen; x < (image.width-filterLen); x++) {
             for (y = filterLen; y < (image.height-filterLen); y++) {
                 for(var a = -filterLen; a < (filterLen+1); a++) 
@@ -71,7 +71,7 @@ function sharpFilter(image, percent) {
                 });
             }
         }
-    }
+    //}
 }
 
 
