@@ -69,6 +69,9 @@ function sharpFilter(image, percent) {
                     g: parseInt((1.0/9.0)*counterG),
                     b: parseInt((1.0/9.0)*counterB)
                 });
+                counterR = 0;
+                counterG = 0;
+                counterB = 0;
             }
         }
     //}
