@@ -12,9 +12,9 @@ function invertFilter(image, percent) {
         for (y = 0; y < image.height; y++) {
             pixel = image.getPixel(x, y);
             image.setPixel(x, y, {
-                r: 255 - pixel.r,
-                g: 255 - pixel.g,
-                b: 255 - pixel.b
+                r: parseInt(((255 - pixel.r)*percent) + (pixel.r*(1-percent))),
+                g: parseInt(((255 - pixel.g)*percent) + (pixel.g*(1-percent))),
+                b: parseInt(((255 - pixel.b)*percent) + (pixel.b*(1-percent)))
             });
         }
     }
@@ -22,7 +22,7 @@ function invertFilter(image, percent) {
 
 function gridFilter(image, percent) {
     var x, y, pixel;
-    var gridSize = parseInt(40*percent);
+    var gridSize = parseInt(80*percent) + 3;
 
     for (x = 0; x < image.width; x++) {
         for (y = 0; y < image.height; y++) {
