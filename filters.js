@@ -81,9 +81,9 @@ function blurFilter(image, percent) {
 function sharpFilter(image, percent) {
     var x, y, pixel;
     var filter = [
-        [-1,-1,-1],
-        [-1,8,-1],
-        [-1,-1,-1]
+        [1,1,1],
+        [1,-8,1],
+        [1,1,1]
     ];
     var filterSize = filter.length;
     var filterLen = (filterSize - 1) / 2;
@@ -91,7 +91,7 @@ function sharpFilter(image, percent) {
     var counterG = 0;
     var counterB = 0;
 
-    //for (var l = 0; l < parseInt(100*percent); l++){
+    for (var l = 0; l < parseInt(20*percent); l++){
         for (x = filterLen; x < (image.width-filterLen); x++) {
             for (y = filterLen; y < (image.height-filterLen); y++) {
                 for(var a = -filterLen; a < (filterLen+1); a++) {
@@ -103,16 +103,16 @@ function sharpFilter(image, percent) {
                 }
                 }
                 image.setPixel(x, y, {
-                    r: counterR,
-                    g: counterG,
-                    b: counterB
+                    r: counterR + image.r,
+                    g: counterG + image.g,
+                    b: counterB + image.b
                 });
                 counterR = 0;
                 counterG = 0;
                 counterB = 0;
             }
         }
-    //}
+    }
 }
 
 var filters = [
