@@ -20,6 +20,30 @@ function invertFilter(image, percent) {
     }
 }
 
+function gridFilter(image) {
+    var x, y, pixel;
+
+    for (x = 0; x < image.height; x++) {
+        for (y = 0; y < image.width; y++) {
+            pixel = image.getPixel(x, y);
+            if (x%10 == 0 || y%10 == 0) {
+                image.setPixel(x, y, {
+                    r: 255,
+                    g: 255,
+                    b: 255
+                });
+            }
+            else{
+                image.setPixel(x, y, {
+                    r: pixel.r,
+                    g: pixel.g,
+                    b: pixel.b
+                });
+            }
+        }
+    }
+}
+
 
 var filters = [
         {
@@ -29,6 +53,10 @@ var filters = [
         {
             name: "Inverted",
             filter: invertFilter
+        },
+        {
+            name: "Grid",
+            filter: gridFilter
         }
 ];
 var selected_filter = 0;
