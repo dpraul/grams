@@ -41,12 +41,49 @@ function gridFilter(image, percent) {
     }
 }
 
-function sharpFilter(image, percent) {
+function blurFilter(image, percent) {
     var x, y, pixel;
     var filter = [
         [1,1,1],
         [1,1,1],
         [1,1,1]
+    ];
+    var filterSize = filter.length;
+    var filterLen = (filterSize - 1) / 2;
+    var counterR = 0;
+    var counterG = 0;
+    var counterB = 0;
+
+    for (var l = 0; l < parseInt(20*percent); l++){
+        for (x = filterLen; x < (image.width-filterLen); x++) {
+            for (y = filterLen; y < (image.height-filterLen); y++) {
+                for(var a = -filterLen; a < (filterLen+1); a++) {
+                for (var b = -filterLen; b < (filterLen+1); b++) {
+                    pixel = image.getPixel(x+a, y+b);
+                    counterR = counterR + filter[filterLen+a][filterLen+b]*pixel.r;
+                    counterG = counterG + filter[filterLen+a][filterLen+b]*pixel.g;
+                    counterB = counterB + filter[filterLen+a][filterLen+b]*pixel.b;
+                }
+                }
+                image.setPixel(x, y, {
+                    r: parseInt((1.0/9.0)*counterR),
+                    g: parseInt((1.0/9.0)*counterG),
+                    b: parseInt((1.0/9.0)*counterB)
+                });
+                counterR = 0;
+                counterG = 0;
+                counterB = 0;
+            }
+        }
+    }
+}
+
+function sharpFilter(image, percent) {
+    var x, y, pixel;
+    var filter = [
+        [-1,-1,-1],
+        [-1,8,-1],
+        [-1,-1,-1]
     ];
     var filterSize = filter.length;
     var filterLen = (filterSize - 1) / 2;
@@ -60,15 +97,15 @@ function sharpFilter(image, percent) {
                 for(var a = -filterLen; a < (filterLen+1); a++) {
                 for (var b = -filterLen; b < (filterLen+1); b++) {
                     pixel = image.getPixel(x+a, y+b);
-                    counterR = counterR + pixel.r;
-                    counterG = counterG + pixel.g;
-                    counterB = counterB + pixel.b;
+                    counterR = counterR + filter[filterLen+a][filterLen+b]*pixel.r;
+                    counterG = counterG + filter[filterLen+a][filterLen+b]*pixel.g;
+                    counterB = counterB + filter[filterLen+a][filterLen+b]*pixel.b;
                 }
                 }
                 image.setPixel(x, y, {
-                    r: parseInt((1.0/9.0)*counterR),
-                    g: parseInt((1.0/9.0)*counterG),
-                    b: parseInt((1.0/9.0)*counterB)
+                    r: counterR,
+                    g: counterG,
+                    b: counterB
                 });
                 counterR = 0;
                 counterG = 0;
@@ -77,7 +114,6 @@ function sharpFilter(image, percent) {
         }
     //}
 }
-
 
 var filters = [
         {
@@ -91,6 +127,10 @@ var filters = [
         {
             name: "Grid",
             filter: gridFilter
+        },
+        {
+            name: "Blur",
+            filter: blurFilter
         },
         {
             name: "Sharpen",
