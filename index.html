@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grams</title>
+
+    <link href="style.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+
+<input id="image_in" type="file" accept="image/*" capture="camera">
+<button id="image_in_btn">+ Upload Picture</button>
+
+<div class="display_container">
+    <canvas id="display"></canvas>
+</div>
+
+
+<div id="bottom_bar">
+    <button id="prev_filter">&leftarrow; Previous Filter</button>
+    <div id="filter_name">No Filter</div>
+    <button id="next_filter">Next Filter &rightarrow;</button>
+</div>
+
+<script src="image.js"></script>
+<script src="main.js"></script>
+<script src="filters.js"></script>
+
+</body>
+</html>
