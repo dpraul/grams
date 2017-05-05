@@ -5,33 +5,32 @@ function SimpleImage(canvas) {
     this.width = this.canvas.width;
     this.height = this.canvas.height;
 
-    this.imageData = this.context.getImageData(0, 0, this.width, this.height);
-    this.data = this.imageData.data;
-    this.original_data = this.data.slice();
+    this.img = this.context.getImageData(0, 0, this.width, this.height);
+    this.original_data = this.img.data.slice();
 }
 
 SimpleImage.prototype = {
     reset: function() {
-        for (var i = 0; i < this.data.length; i++) {
-            this.data[i] = this.original_data[i];
+        for (var i = 0; i < this.img.data.length; i++) {
+            this.img.data[i] = this.original_data[i];
         }
     },
 
     render: function() {
-        this.context.putImageData(this.imageData, 0, 0);
+        this.context.putImageData(this.img, 0, 0);
     },
 
     _getIndex: function (x, y) {
-        return ((Math.floor(y) * this.width) + Math.floor(x)) * 4;
+        return ((y * this.width) + x) * 4;
     },
 
     getPixel: function (x, y) {
         var i = this._getIndex(x, y);
         return {
-            r: this.data[i],
-            g: this.data[i+1],
-            b: this.data[i+2],
-            a: this.data[i+3]
+            r: this.img.data[i],
+            g: this.img.data[i+1],
+            b: this.img.data[i+2],
+            a: this.img.data[i+3]
         };
     },
 
@@ -41,9 +40,9 @@ SimpleImage.prototype = {
         }
 
         var i = this._getIndex(x, y);
-        this.data[i] = pixel.r;
-        this.data[i+1] = pixel.g;
-        this.data[i+2] = pixel.b;
-        this.data[i+3] = pixel.a;
+        this.img.data[i] = pixel.r;
+        this.img.data[i+1] = pixel.g;
+        this.img.data[i+2] = pixel.b;
+        this.img.data[i+3] = pixel.a;
     }
 };
