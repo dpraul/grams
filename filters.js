@@ -23,8 +23,8 @@ function invertFilter(image, percent) {
 function gridFilter(image) {
     var x, y, pixel;
 
-    for (x = 0; x < image.height; x++) {
-        for (y = 0; y < image.width; y++) {
+    for (x = 0; x < image.width; x++) {
+        for (y = 0; y < image.height; y++) {
             pixel = image.getPixel(x, y);
             if (x%10 == 0 || y%10 == 0) {
                 image.setPixel(x, y, {
@@ -34,11 +34,7 @@ function gridFilter(image) {
                 });
             }
             else{
-                image.setPixel(x, y, {
-                    r: pixel.r,
-                    g: pixel.g,
-                    b: pixel.b
-                });
+                // do nothing to the pixel
             }
         }
     }
