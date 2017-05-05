@@ -57,12 +57,13 @@ function sharpFilter(image, percent) {
     //for (var l = 0; l < parseInt(100*percent); l++){
         for (x = filterLen; x < (image.width-filterLen); x++) {
             for (y = filterLen; y < (image.height-filterLen); y++) {
-                for(var a = -filterLen; a < (filterLen+1); a++) 
-                for (var b = -filterLen; b < (filterLen+2); b++) {
+                for(var a = -filterLen; a < (filterLen+1); a++) {
+                for (var b = -filterLen; b < (filterLen+1); b++) {
                     pixel = image.getPixel(x+a, y+b);
                     counterR = counterR + pixel.r;
                     counterG = counterG + pixel.g;
                     counterB = counterB + pixel.b;
+                }
                 }
                 image.setPixel(x, y, {
                     r: parseInt((1.0/9.0)*counterR),
