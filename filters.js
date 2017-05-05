@@ -2,10 +2,10 @@
  * All the filters
  */
 
-function noFilter(image) {
+function noFilter(image, percent) {
 }
 
-function invertFilter(image) {
+function invertFilter(image, percent) {
     var x, y, pixel;
 
     for (x = 0; x < image.width; x++) {
@@ -55,13 +55,15 @@ function applyPrevFilter() {
 }
 
 function applyFilter() {
-    var f = filters[selected_filter];
+    var f = filters[selected_filter],
+        filter_percent = document.getElementById('filter_range').value / 100.0;
     document.getElementById('filter_name').innerHTML = f.name;
     window.image.reset();
-    f.filter(window.image);
+    f.filter(window.image, filter_percent);
     window.image.render();
 }
 
 
+document.getElementById('filter_range').onchange = applyFilter;
 document.getElementById('prev_filter').onclick = applyPrevFilter;
 document.getElementById('next_filter').onclick = applyNextFilter;

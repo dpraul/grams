@@ -33,10 +33,19 @@ button, #filter_name {
 #display {
     position: absolute;
     max-width: 100%;
-    max-height: 80%;
+    max-height: 75%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+#filter_range {
+    position: absolute;
+    left: 0;
+    bottom: 10%;
+    height: 5%;
+    width: 90%;
+    margin: 0 5%;
 }
 
 
