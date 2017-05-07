@@ -118,6 +118,9 @@ function sharpFilter(image, percent) {
 function motionBlurFilter(image, percent) {
     var x, y, pixel;
     var per = parseInt(15*percent)+3;
+    if(per%2 == 0){
+        per++;
+    }
 
     var filter = new Array();
 
@@ -132,8 +135,6 @@ function motionBlurFilter(image, percent) {
             }
         }
     }
-
-    console.log(filter);
 
     var filterSize = filter.length;
     var filterLen = (filterSize - 1) / 2;
