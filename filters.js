@@ -146,9 +146,9 @@ function sharperFilter(image, percent) {
                 }
                 }
                 image.setPixel(x, y, {
-                    r: counterR + pixel.r,
-                    g: counterG + pixel.g,
-                    b: counterB + pixel.b
+                    r: counterR,
+                    g: counterG,
+                    b: counterB
                 });
                 counterR = 0;
                 counterG = 0;
