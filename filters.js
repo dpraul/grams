@@ -125,10 +125,10 @@ function motionBlurFilter(image, percent) {
         filter[q] = new Array();
         for (var r = 0; r < (per+1); r++){
             if (q == r){
-                 filter[q][j] = 1;
+                 filter[q][r] = 1;
             }
             else{
-                filter[q][j] = 0;
+                filter[q][r] = 0;
             }
         }
     }
