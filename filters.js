@@ -115,6 +115,49 @@ function sharpFilter(image, percent) {
     }
 }
 
+function sharperFilter(image, percent) {
+    var x, y, pixel;
+    var filter = [
+        [0,1,1,2,2,2,1,1,0],
+        [1,2,4,5,5,5,4,2,1],
+        [1,4,5,3,0,3,5,4,1],
+        [2,5,3,-12,-24,-12,3,5,2],
+        [2,5,0,-24,-40,-24,0,5,2],
+        [2,5,3,-12,-24,-12,3,5,2],
+        [1,4,5,3,0,3,5,4,1],
+        [1,2,4,5,5,5,4,2,1],
+        [0,1,1,2,2,2,1,1,0]
+    ];
+    var filterSize = filter.length;
+    var filterLen = (filterSize - 1) / 2;
+    var counterR = 0;
+    var counterG = 0;
+    var counterB = 0;
+
+    for (var l = 0; l < parseInt(4*percent); l++){
+        for (x = filterLen; x < (image.width-filterLen); x++) {
+            for (y = filterLen; y < (image.height-filterLen); y++) {
+                for(var a = -filterLen; a < (filterLen+1); a++) {
+                for (var b = -filterLen; b < (filterLen+1); b++) {
+                    pixel = image.getPixel(x+a, y+b);
+                    counterR = counterR + filter[filterLen+a][filterLen+b]*pixel.r;
+                    counterG = counterG + filter[filterLen+a][filterLen+b]*pixel.g;
+                    counterB = counterB + filter[filterLen+a][filterLen+b]*pixel.b;
+                }
+                }
+                image.setPixel(x, y, {
+                    r: counterR + pixel.r,
+                    g: counterG + pixel.g,
+                    b: counterB + pixel.b
+                });
+                counterR = 0;
+                counterG = 0;
+                counterB = 0;
+            }
+        }
+    }
+}
+
 var filters = [
         {
             name: "No Filter",
@@ -135,6 +178,11 @@ var filters = [
         {
             name: "Sharpen",
             filter: sharpFilter
+        }
+        ,
+        {
+            name: "Sharper",
+            filter: sharperFilter
         }
 ];
 var selected_filter = 0;
