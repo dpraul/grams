@@ -311,8 +311,8 @@ function contrastFilter(image, percent) {
         for (y = 0; y < image.height; y++) {
             pixel = image.getPixel(x, y);
             counterR[pixel.r] = counterR[pixel.r] + 1;
-            counterG[pixel.g] = counterR[pixel.g] + 1;
-            counterB[pixel.b] = counterR[pixel.b] + 1;
+            counterG[pixel.g] = counterG[pixel.g] + 1;
+            counterB[pixel.b] = counterB[pixel.b] + 1;
         }
     }
     for(var i = 0; i < 256; i++){
