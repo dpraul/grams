@@ -115,45 +115,47 @@ function sharpFilter(image, percent) {
     }
 }
 
-function sharperFilter(image, percent) {
+function motionBlurFilter(image, percent) {
     var x, y, pixel;
-    var filter = [
-        [0,1,1,2,2,2,1,1,0],
-        [1,2,4,5,5,5,4,2,1],
-        [1,4,5,3,0,3,5,4,1],
-        [2,5,3,-12,-24,-12,3,5,2],
-        [2,5,0,-24,-40,-24,0,5,2],
-        [2,5,3,-12,-24,-12,3,5,2],
-        [1,4,5,3,0,3,5,4,1],
-        [1,2,4,5,5,5,4,2,1],
-        [0,1,1,2,2,2,1,1,0]
-    ];
+    var per = parseInt(7*percent)+3;
+    var filter = new Array();
+
+    for (var q = 0; q < (per+1); q++){
+        filter[q] = new Array();
+        for (var r = 0; r < (per+1); r++){
+            if (q == r){
+                 filter[q][j] = 1;
+            }
+            else{
+                filter[q][j] = 0;
+            }
+        }
+    }
+
     var filterSize = filter.length;
     var filterLen = (filterSize - 1) / 2;
     var counterR = 0;
     var counterG = 0;
     var counterB = 0;
 
-    for (var l = 0; l < parseInt(4*percent); l++){
-        for (x = filterLen; x < (image.width-filterLen); x++) {
-            for (y = filterLen; y < (image.height-filterLen); y++) {
-                for(var a = -filterLen; a < (filterLen+1); a++) {
-                for (var b = -filterLen; b < (filterLen+1); b++) {
-                    pixel = image.getPixel(x+a, y+b);
-                    counterR = counterR + filter[filterLen+a][filterLen+b]*pixel.r;
-                    counterG = counterG + filter[filterLen+a][filterLen+b]*pixel.g;
-                    counterB = counterB + filter[filterLen+a][filterLen+b]*pixel.b;
-                }
-                }
-                image.setPixel(x, y, {
-                    r: counterR,
-                    g: counterG,
-                    b: counterB
-                });
-                counterR = 0;
-                counterG = 0;
-                counterB = 0;
+    for (x = filterLen; x < (image.width-filterLen); x++) {
+        for (y = filterLen; y < (image.height-filterLen); y++) {
+            for(var a = -filterLen; a < (filterLen+1); a++) {
+            for (var b = -filterLen; b < (filterLen+1); b++) {
+                pixel = image.getPixel(x+a, y+b);
+                counterR = counterR + filter[filterLen+a][filterLen+b]*pixel.r;
+                counterG = counterG + filter[filterLen+a][filterLen+b]*pixel.g;
+                counterB = counterB + filter[filterLen+a][filterLen+b]*pixel.b;
             }
+            }
+            image.setPixel(x, y, {
+                r: parseInt((1.0/per)*counterR),
+                g: parseInt((1.0/per)*counterG),
+                b: parseInt((1.0/per)*counterB)
+            });
+            counterR = 0;
+            counterG = 0;
+            counterB = 0;
         }
     }
 }
@@ -181,8 +183,8 @@ var filters = [
         }
         ,
         {
-            name: "Sharper",
-            filter: sharperFilter
+            name: "Motion Blur",
+            filter: motionBlurFilter
         }
 ];
 var selected_filter = 0;
