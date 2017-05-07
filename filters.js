@@ -164,6 +164,50 @@ function motionBlurFilter(image, percent) {
     }
 }
 
+function blurFilter1(image, percent) {
+    var x, y, pixel;
+    var per = parseInt(15*percent)+3;
+    if(per%2 == 1){
+        per++;
+    }
+
+    var filter = new Array();
+
+    for (var q = 0; q < (per+1); q++){
+        filter[q] = new Array();
+        for (var r = 0; r < (per+1); r++){
+             filter[q][r] = 1;
+        }
+    }
+
+    var filterSize = filter.length;
+    var filterLen = (filterSize - 1) / 2;
+    var counterR = 0;
+    var counterG = 0;
+    var counterB = 0;
+
+    for (x = filterLen; x < (image.width-filterLen); x++) {
+        for (y = filterLen; y < (image.height-filterLen); y++) {
+            for(var a = -filterLen; a < (filterLen+1); a++) {
+            for (var b = -filterLen; b < (filterLen+1); b++) {
+                pixel = image.getPixel(x+a, y+b);
+                counterR = counterR + filter[filterLen+a][filterLen+b]*pixel.r;
+                counterG = counterG + filter[filterLen+a][filterLen+b]*pixel.g;
+                counterB = counterB + filter[filterLen+a][filterLen+b]*pixel.b;
+            }
+            }
+            image.setPixel(x, y, {
+                r: parseInt((1.0/per)*counterR),
+                g: parseInt((1.0/per)*counterG),
+                b: parseInt((1.0/per)*counterB)
+            });
+            counterR = 0;
+            counterG = 0;
+            counterB = 0;
+        }
+    }
+}
+
 var filters = [
         {
             name: "No Filter",
@@ -179,7 +223,7 @@ var filters = [
         },
         {
             name: "Blur",
-            filter: blurFilter
+            filter: blurFilter1
         },
         {
             name: "Sharpen",
