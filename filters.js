@@ -41,6 +41,26 @@ function gridFilter(image, percent) {
     }
 }
 
+function noiseFilter(image, percent) {
+    var x, y, pixel;
+
+    for (x = 0; x < image.width; x++) {
+        for (y = 0; y < image.height; y++) {
+            pixel = image.getPixel(x, y);
+            if (Math.floor((Math.random() * 100) + 1) < (percent*100)) {
+                image.setPixel(x, y, {
+                    r: 255,
+                    g: 255,
+                    b: 255
+                });
+            }
+            else{
+                // do nothing to the pixel
+            }
+        }
+    }
+}
+
 function motionBlurFilter(image, percent) {
     var x, y, pixel;
     var per = parseInt(15*percent)+6;
@@ -275,6 +295,52 @@ function wavesFilter(image, percent) {
     }
 }
 
+function contrastFilter(image, percent) {
+    var x, y, pixel;
+    var counterR = new Array(255).fill(0);
+    var counterG = new Array(255).fill(0);
+    var counterB = new Array(255).fill(0);
+    var mapR = new Array();
+    var mapG = new Array();
+    var mapB = new Array();
+    var sumR = 0.0;
+    var sumG = 0.0;
+    var sumB = 0.0;
+
+    for (x = 0; x < image.width; x++) {
+        for (y = 0; y < image.height; y++) {
+            pixel = image.getPixel(x, y);
+            counterR[pixel.r] = counterR[pixel.r] + 1;
+            counterG[pixel.g] = counterR[pixel.g] + 1;
+            counterB[pixel.b] = counterR[pixel.b] + 1;
+        }
+    }
+    for(var i = 0; i < 256; i++){
+        counterR[i] = counterR[i] / (parseFloat(image.width)*parseFloat(image.height));
+        counterG[i] = counterG[i] / (parseFloat(image.width)*parseFloat(image.height));
+        counterB[i] = counterB[i] / (parseFloat(image.width)*parseFloat(image.height));
+    }
+    for(var i = 0; i < 256; i++){
+        sumR = sumR + counterR[i];
+        sumG = sumG + counterG[i];
+        sumB = sumB + counterB[i];
+        mapR[i] = Math.round(255.0 * sumR)
+        mapG[i] = Math.round(255.0 * sumG)
+        mapB[i] = Math.round(255.0 * sumB)
+    }
+
+     for (x = 0; x < image.width; x++) {
+        for (y = 0; y < image.height; y++) {
+            pixel = image.getPixel(x, y);
+            image.setPixel(x, y, {
+                r: mapR[pixel.r],
+                g: mapG[pixel.g],
+                b: mapB[pixel.b]
+            });
+        }
+    }
+
+}
 
 var filters = [
         {
@@ -304,6 +370,14 @@ var filters = [
         {
             name: "Waves",
             filter: wavesFilter
+        },
+        {
+            name: "Noise",
+            filter: noiseFilter
+        },
+        {
+            name: "Contrast",
+            filter: contrastFilter
         }
 ];
 var selected_filter = 0;
