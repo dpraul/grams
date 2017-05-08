@@ -340,9 +340,9 @@ function wavesFilter(image, percent) {
 function contrastFilter(image, percent) {
     var i, x, y, pixel,
         size = (image.width * image.height),
-        counterR = new Array(255).fill(0),
-        counterG = new Array(255).fill(0),
-        counterB = new Array(255).fill(0),
+        counterR = new Array(256).fill(0),
+        counterG = new Array(256).fill(0),
+        counterB = new Array(256).fill(0),
         mapR = [], mapG = [], mapB = [],
         sumR = 0.0,  sumG = 0.0, sumB = 0.0;
 
@@ -366,6 +366,7 @@ function contrastFilter(image, percent) {
         mapG[i] = Math.round(255.0 * sumG);
         mapB[i] = Math.round(255.0 * sumB);
     }
+
 
      for (x = 0; x < image.width; x++) {
         for (y = 0; y < image.height; y++) {
