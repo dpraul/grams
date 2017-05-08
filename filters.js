@@ -326,9 +326,9 @@ function wavesFilter(image, percent) {
                 }
             }
             image.setPixel(x, y, {
-                r: parseInt(c * counterR) + 128,
-                g: parseInt(c * counterG) + 128,
-                b: parseInt(c * counterB) + 128
+                r: counterR + 128,
+                g: counterG + 128,
+                b: counterB + 128
             });
             counterR = 0;
             counterG = 0;
