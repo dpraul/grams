@@ -20,6 +20,30 @@ function invertFilter(image, percent) {
     }
 }
 
+function greyscaleFilter(image, percent) {
+    var x, y, pixel;
+    var grey = 0;
+    var bw = 0;
+
+    for (x = 0; x < image.width; x++) {
+        for (y = 0; y < image.height; y++) {
+            pixel = image.getPixel(x, y);
+            grey = parseInt((pixel.r+pixel.g+pixel.g)/3.0);
+            if (grey > 128){
+                bw = 255;
+            }
+            else{
+                bw = 0;
+            }
+            image.setPixel(x, y, {
+                r: parseInt((bw*percent) + (grey*(1-percent))),
+                g: parseInt((bw*percent) + (grey*(1-percent))),
+                b: parseInt((bw*percent) + (grey*(1-percent)))
+            });
+        }
+    }
+}
+
 function gridFilter(image, percent) {
     var x, y, pixel;
     var gridSize = parseInt(80*percent) + 3;
@@ -377,6 +401,10 @@ var filters = [
         {
             name: "Contrast",
             filter: contrastFilter
+        },
+        {
+            name: "Greyscale",
+            filter: greyscaleFilter
         }
 ];
 var selected_filter = 0;
