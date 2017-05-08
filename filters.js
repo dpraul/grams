@@ -44,6 +44,21 @@ function greyscaleFilter(image, percent) {
     }
 }
 
+function sepiaFilter(image, percent) {
+    var x, y, pixel;
+
+    for (x = 0; x < image.width; x++) {
+        for (y = 0; y < image.height; y++) {
+            pixel = image.getPixel(x, y);
+            image.setPixel(x, y, {
+                r: parseInt((pixel.r*0.393+pixel.g*0.769+pixel.b*0.189)*percent+pixel.r*(1-percent)),
+                g: parseInt((pixel.r*0.349+pixel.g*0.686+pixel.b*0.189)*percent+pixel.g*(1-percent)),
+                b: parseInt((pixel.r*0.272+pixel.g*0.534+pixel.b*0.131)*percent+pixel.b*(1-percent))
+            });
+        }
+    }
+}
+
 function gridFilter(image, percent) {
     var x, y, pixel;
     var gridSize = parseInt(80*percent) + 3;
@@ -405,6 +420,10 @@ var filters = [
         {
             name: "Greyscale",
             filter: greyscaleFilter
+        },
+        {
+            name: "Sepia",
+            filter: sepiaFilter
         }
 ];
 var selected_filter = 0;
