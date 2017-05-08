@@ -371,9 +371,9 @@ function contrastFilter(image, percent) {
         for (y = 0; y < image.height; y++) {
             pixel = image.getPixel(x, y);
             image.setPixel(x, y, {
-                r: mapR[pixel.r],
-                g: mapG[pixel.g],
-                b: mapB[pixel.b]
+                r: parseInt(mapR[pixel.r]*percent+pixel.r*(1-percent)),
+                g: parseInt(mapG[pixel.g]*percent+pixel.g*(1-percent)),
+                b: parseInt(mapB[pixel.b]*percent+pixel.b*(1-percent))
             });
         }
     }
